@@ -38,33 +38,43 @@ Linux용 Apex Legends 외부 치트입니다.
 
 1. Flatpak 설치
    
-```
+```console
 sudo add-apt-repository ppa:alexlarsson/flatpak
 sudo apt update && sudo apt install flatpak xdg-desktop-portal
 ```
 
 2. Steam 설치
    
-``` sudo flatpak install com.valvesoftware.Steam ```
+```console
+sudo flatpak install com.valvesoftware.Steam
+```
 
 ## 루트 프로세스 격리 / 프로세스 추적 끄기
 루트 프로세스를 숨기고 루트가 아닌 계정의 프로세스 감시를 차단합니다.
 
 1. /etc/fstab 열기
 
-``` sudo vim /etc/fstab ```
+```console
+sudo vim /etc/fstab
+```
 
 2. 파일에 해당 줄 추가 후 저장합니다.
 
-``` proc /proc proc defaults,nosuid,nodev,noexec,relatime,hidepid=1 0 0 ```
+```console 
+proc /proc proc defaults,nosuid,nodev,noexec,relatime,hidepid=1 0 0
+```
 
 3. /etc/sysctl.d/10-ptrace.conf 열기
 
-``` sudo vim /etc/sysctl.d/10-ptrace.conf ```
+```console 
+sudo vim /etc/sysctl.d/10-ptrace.conf
+```
 
 4. kernel.yama.ptrace_scope 값 변경 후 저장합니다.
 
-``` kernel.yama.ptrace_scope = 2 ```
+```console
+kernel.yama.ptrace_scope = 2
+```
 
 6. 다시 시작
 
@@ -72,7 +82,7 @@ sudo apt update && sudo apt install flatpak xdg-desktop-portal
 
 7. 확인
 
-```
+```console
 ps aux
 sysctl kernel.yama.ptrace_scope
 ```
@@ -81,7 +91,7 @@ sysctl kernel.yama.ptrace_scope
 
 1. Dotnet SDK / Runtime을 설치합니다.
 
-```
+```console
 sudo apt-get update && sudo apt-get install -y dotnet-sdk-7.0
 sudo apt-get install -y dotnet-runtime-7.0
 ```
@@ -89,7 +99,9 @@ sudo apt-get install -y dotnet-runtime-7.0
 
 2. Git 프로젝트를 생성합니다.
 
-```git clone https://github.com/d32151477/Apex-Sharp```
+```console
+git clone https://github.com/d32151477/Apex-Sharp
+```
 
 ## 실행
 - ```sudo dotnet run``` 프로젝트 실행하기
