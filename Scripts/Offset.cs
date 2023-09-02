@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
 namespace ApexSharp
@@ -43,15 +44,11 @@ namespace ApexSharp
         {
             // [Miscellaneous]
             GLOBALVARS = Get(@"Miscellaneous\GlobalVars");
-            LOCAL_PLAYER = Get(@"Miscellaneous\LocalPlayer");
+            LOCAL_PLAYER = Get(@"Miscellaneous\LocalPlayer") + 0x8;
             
-            LOCAL_PLAYER_ENV = LOCAL_PLAYER + 0x8;
-
             CL_ENTITYLIST = Get(@"Miscellaneous\cl_entitylist");
             CAMERA_ORIGIN = Get(@"Miscellaneous\CPlayer!camera_origin");
             LAST_VISIBLE_TIME = Get(@"Miscellaneous\CPlayer!lastVisibleTime");
-            PROJECTILE_SPEED = Get(@"Miscellaneous\CWeaponX!m_flProjectileSpeed");
-            PROJECTILE_SCALE = Get(@"Miscellaneous\CWeaponX!m_flProjectileScale");
             STUDIO_HDR = Get(@"Miscellaneous\CBaseAnimating!m_pStudioHdr");
             
             CURRENT_FRAME = GLOBALVARS + 0x8;
@@ -115,6 +112,17 @@ namespace ApexSharp
             GLOW_THROUGH_WALL = HIGHLIGHT_SERVER_CONTEXT_ID + 0x10;
             GLOW_COLOR = HIGHLIGHT_PARAMS + 0x18;
             GLOW_MODE = HIGHLIGHT_FUNCTION_BITS + 0x4;
+
+            // (https://www.unknowncheats.me/forum/apex-legends/319804-apex-legends-reversal-structs-offsets-628.html)
+            
+            // [WeaponSettingsMeta]
+            WEAPON_SETTINGS_META_BASE = Get(@"WeaponSettingsMeta\base");
+
+            // [WeaponSettings]
+            PROJECTILE_LAUNCH_SPEED = WEAPON_SETTINGS_META_BASE + Get(@"WeaponSettings\projectile_launch_speed");
+            PROJECTILE_GRAVITY_SCALE = WEAPON_SETTINGS_META_BASE + Get(@"WeaponSettings\projectile_gravity_scale");
+
+            IS_SEMI_AUTO = WEAPON_SETTINGS_META_BASE + Get(@"WeaponSettings\is_semi_auto");
         }
 
         private static long Get(string key)
@@ -128,12 +136,9 @@ namespace ApexSharp
         public const long REGION = 0x140000000; // cat /proc/PID/maps 로 모듈 베이스 주소를 구하세요.
         public static long GLOBALVARS; // [Miscellaneous]
         public static long LOCAL_PLAYER;
-        public static long LOCAL_PLAYER_ENV;
         public static long CL_ENTITYLIST;
         public static long CAMERA_ORIGIN;
         public static long LAST_VISIBLE_TIME;
-        public static long PROJECTILE_SPEED;
-        public static long PROJECTILE_SCALE;
         public static long STUDIO_HDR;
         public static long CURRENT_FRAME;
         public static long IN_ATTACK; // [Buttons]
@@ -171,5 +176,9 @@ namespace ApexSharp
         public static long GLOW_THROUGH_WALL;
         public static long GLOW_COLOR;
         public static long GLOW_MODE;
+        public static long WEAPON_SETTINGS_META_BASE; // [WeaponSettingsMeta]
+        public static long PROJECTILE_LAUNCH_SPEED; // [WeaponSettings]
+        public static long PROJECTILE_GRAVITY_SCALE;
+        public static long IS_SEMI_AUTO;
     }
 }
