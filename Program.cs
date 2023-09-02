@@ -1,4 +1,4 @@
-﻿
+
 using System.Diagnostics;
 
 namespace ApexSharp
@@ -40,7 +40,7 @@ namespace ApexSharp
                         entityPlayer.BasePointer = 0;
 
                     if (LocalPlayer.Invalid) continue;
-
+                    
                     if (Settings.SENSE_ENABLED)
                         sense.Update(LocalPlayer, EntityPlayers);
 
