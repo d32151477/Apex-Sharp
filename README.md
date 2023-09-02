@@ -51,7 +51,7 @@ sudo apt update && sudo apt install flatpak xdg-desktop-portal
 
 ``` sudo vim /etc/fstab ```
 
-2. 파일에 해당 줄 추가 후 저장
+2. 파일에 해당 줄 추가 후 저장합니다.
 
 ``` proc /proc proc defaults,nosuid,nodev,noexec,relatime,hidepid=1 0 0 ```
 
@@ -59,7 +59,7 @@ sudo apt update && sudo apt install flatpak xdg-desktop-portal
 
 ``` sudo vim /etc/sysctl.d/10-ptrace.conf ```
 
-4. kernel.yama.ptrace_scope 값 변경 후 저장
+4. kernel.yama.ptrace_scope 값 변경 후 저장합니다.
 
 ``` kernel.yama.ptrace_scope = 2 ```
 
@@ -84,10 +84,36 @@ sudo apt-get install -y dotnet-runtime-7.0
 ```
 
 
-2. Git 프로젝트 생성
+2. Git 프로젝트를 생성합니다.
 
 ```git clone https://github.com/d32151477/Apex-Sharp```
 
 ## 실행
-- ```sudo dotnet run``` 프로젝트 실행 
-- ```sudo killall dotnet``` 프로젝트 종료
+- ```sudo dotnet run``` 프로젝트 실행하기
+- ```sudo killall dotnet``` 프로젝트 종료하기
+
+## 오프셋 덤프
+
+1. 윈도우 환경에서 [Scylla]를 설치합니다. 
+
+2. EAC를 비활성화합니다.
+
+- 파일 이름을 EasyAntiCheat_launcher.exe에서 EasyAntiCheat_launcher.bak로 수정합니다.
+- 파일 이름을 r5apex.exe에서 EasyAntiCheat_launcher.exe로 수정 후 실행
+
+3. [Scylla]로 프로세스 덤프
+   
+- Scylla를 관리자 권한으로 실행합니다.
+- EasyAntiCheat_launcher.exe 프로세스를 선택합니다.
+- IAT Autosearch 를 선택하고 Yes를 선택합니다.
+- Get Import 를 선택합니다.
+- Dump 선택 후 덤프된 프로그램을 저장합니다.
+
+4. [Apexdream]으로 오프셋 추출
+
+- [Apexdream]을 빌드하여 추출하거나 미리 빌드된 사이트 [ApexDumper]에서 추출합니다.  
+- 추출된 파일을 Dump.bin로 저장하여 Apex-Sharp 폴더에 붙여넣습니다.
+
+[Apexdream]: https://github.com/CasualX/apexdream/tree/master/offsets
+[ApexDumper]: https://casualhacks.net/apexdream/apexdumper.html
+[Scylla]: https://github.com/scylladb/scylladb
