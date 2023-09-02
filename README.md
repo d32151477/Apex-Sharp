@@ -89,7 +89,7 @@ sudo apt-get install -y dotnet-runtime-7.0
 
 2. Git 프로젝트를 생성합니다.
 
-```git clone https://github.com/d32151477/ApexAssistSharp-Linux```
+```git clone https://github.com/d32151477/Apex-Sharp```
 
 ## 실행
 - ```sudo dotnet run``` 프로젝트 실행하기
