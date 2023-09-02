@@ -138,8 +138,8 @@ namespace ApexSharp
             handle &= 0xffff;
 
             var entity = Memory.Read<long>(entitylist + (handle << 5));
-            BulletSpeed = Memory.Read<float>(entity + Offset.PROJECTILE_SPEED);
-            BulletGravityScale = Memory.Read<float>(entity + Offset.PROJECTILE_SCALE);
+            BulletSpeed = Memory.Read<float>(entity + Offset.PROJECTILE_LAUNCH_SPEED);
+            BulletGravityScale = Memory.Read<float>(entity + Offset.PROJECTILE_GRAVITY_SCALE);
             ZoomFov = Memory.Read<float>(entity + Offset.ZOOM_FOV);
 
             BulletGravity = 750.0f * BulletGravityScale;
@@ -161,6 +161,12 @@ namespace ApexSharp
             TargetVelocity = targetVelocity;
             BulletSpeed = bulletSpeed;
             BulletGravity = bulletGravity;
+        }
+
+        // 상대방의 위치를 계산합니다.
+        public Vector3 GetExtrapolatedTargetOrigin(float time)
+        {
+            return TargetOrigin + (TargetVelocity * time);
         }
 
         // 해당 방향으로의 총알의 발사 각도를 계산합니다.
@@ -210,7 +216,7 @@ namespace ApexSharp
 
             for (float time = 0.0f; time <= MAX_TIME; time += TIME_STEP)
             {
-                var targetOrigin = TargetOrigin + (TargetVelocity * time);
+                var targetOrigin = GetExtrapolatedTargetOrigin(time);
                 if (!CalculateTrajectory(targetOrigin, out var travelTime, out angles))
                     return false;
                     
