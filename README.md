@@ -1,4 +1,4 @@
-# Apex-Sharp
+# ApexAssist-Linux
 Linux용 Apex Legends 외부 치트입니다.
 
 ## Sense
