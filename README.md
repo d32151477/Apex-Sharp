@@ -72,11 +72,6 @@ Linux용 Apex Legends 외부 치트입니다.
 
 ```git clone https://github.com/d32151477/Apex-Sharp```
 
-
-3. 프로젝트 폴더로 이동
-
-``` cd Apex-Sharp-master ```
-
 ## 실행
 - ```sudo dotnet run``` 프로젝트 실행 
 - ```sudo killall dotnet``` 프로젝트 종료
