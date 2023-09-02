@@ -30,7 +30,7 @@ Linux용 Apex Legends 외부 치트입니다.
 - ```INPUT_MOUSE_DEVICE_PATH``` 마우스 입력 장치 주소
 - ```INPUT_KEYBOARD_DEVICE_PATH``` 키보드 입력 장치 주소
 
-## Flatpak / 스팀 설치
+## Flatpak / Steam 설치
 루트 프로세스 격리를 사용하려면 Flatpak을 통해 Steam을 설치해야합니다.
 
 1. Flatpak 설치
