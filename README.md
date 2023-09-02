@@ -30,6 +30,20 @@ Linux용 Apex Legends 외부 치트입니다.
 - ```INPUT_MOUSE_DEVICE_PATH``` 마우스 입력 장치 주소
 - ```INPUT_KEYBOARD_DEVICE_PATH``` 키보드 입력 장치 주소
 
+## Flatpak / 스팀 설치
+루트 프로세스 격리를 사용하려면 Flatpak을 통해 Steam을 설치해야합니다.
+
+1. Flatpak 설치
+   
+```
+sudo add-apt-repository ppa:alexlarsson/flatpak
+sudo apt update && sudo apt install flatpak xdg-desktop-portal
+```
+
+2. Steam 설치
+   
+``` sudo flatpak install com.valvesoftware.Steam ```
+
 ## 루트 프로세스 격리 / 프로세스 추적 끄기
 루트 프로세스를 숨기고 루트가 아닌 계정의 프로세스 감시를 차단합니다.
 
@@ -55,17 +69,19 @@ Linux용 Apex Legends 외부 치트입니다.
 
 7. 확인
 
-``` ps aux ```
-
-``` sysctl kernel.yama.ptrace_scope ```
+```
+ps aux
+sysctl kernel.yama.ptrace_scope
+```
 
 ## 설치
 
 1. Dotnet SDK / Runtime을 설치합니다.
 
-```sudo apt-get update && sudo apt-get install -y dotnet-sdk-7.0```
-
-```sudo apt-get install -y dotnet-runtime-7.0```
+```
+sudo apt-get update && sudo apt-get install -y dotnet-sdk-7.0
+sudo apt-get install -y dotnet-runtime-7.0
+```
 
 
 2. Git 프로젝트 생성
