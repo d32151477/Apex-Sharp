@@ -43,6 +43,7 @@ namespace ApexSharp
         {
             // [Miscellaneous]
             GLOBALVARS = Get(@"Miscellaneous\GlobalVars");
+            LEVEL_NAME = Get(@"Miscellaneous\LevelName");
             LOCAL_PLAYER = Get(@"Miscellaneous\LocalPlayer") + 0x8;
             
             CL_ENTITYLIST = Get(@"Miscellaneous\cl_entitylist");
@@ -134,6 +135,7 @@ namespace ApexSharp
         
         public const long REGION = 0x140000000; // cat /proc/PID/maps 로 모듈 베이스 주소를 구하세요.
         public static long GLOBALVARS; // [Miscellaneous]
+        public static long LEVEL_NAME;
         public static long LOCAL_PLAYER;
         public static long CL_ENTITYLIST;
         public static long CAMERA_ORIGIN;
