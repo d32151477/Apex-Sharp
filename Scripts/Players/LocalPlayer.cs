@@ -25,5 +25,9 @@ namespace ApexSharp
             get => Memory.Read<Vector3>(BasePointer + Offset.VIEW_ANGLES);
             set => Memory.Write(BasePointer + Offset.VIEW_ANGLES, value);
         }
+
+        private const long kLobbyNamePtr = 8746661657006010477;
+        private static long LevelNamePtr => Memory.Read<long>(Offset.REGION + Offset.LEVEL_NAME);
+        public static bool IsLobby => LevelNamePtr is kLobbyNamePtr;
     }
 }
