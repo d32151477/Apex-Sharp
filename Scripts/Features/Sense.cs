@@ -11,6 +11,9 @@ namespace ApexSharp
             foreach (var entityPlayer in entityPlayers)
             {
                 if (entityPlayer.Invalid) continue;
+                if (entityPlayer.IsPlayer is not true) continue;
+                if (entityPlayer.BasePointer == player.BasePointer) continue;
+
                 if (entityPlayer.IsDead) continue;
                 if (entityPlayer.TeamNum == playerTeamNum) continue;
 
