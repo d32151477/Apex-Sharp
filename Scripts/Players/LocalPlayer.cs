@@ -26,8 +26,20 @@ namespace ApexSharp
             set => Memory.Write(BasePointer + Offset.VIEW_ANGLES, value);
         }
 
-        private const long kLobbyNamePtr = 8746661657006010477;
-        private static long LevelNamePtr => Memory.Read<long>(Offset.REGION + Offset.LEVEL_NAME);
-        public static bool IsLobby => LevelNamePtr is kLobbyNamePtr;
+        public static bool CantPlay
+        {
+            get
+            {
+                const string kLobbyName = "mp_lobby";
+                var levelName = Memory.ReadString(Offset.REGION + Offset.LEVEL_NAME, kLobbyName.Length);
+
+                if (string.IsNullOrEmpty(levelName))
+                    return true;
+                    
+                if (levelName == kLobbyName)
+                    return true;
+                return false;
+            }
+        }
     }
 }
