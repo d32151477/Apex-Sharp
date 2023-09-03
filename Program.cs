@@ -6,12 +6,12 @@ namespace ApexSharp
     internal class Program
     {
         public static bool DebugMode = false;
-        
-        static Settings Settings => Settings.Instance;
-        static readonly LocalPlayer LocalPlayer = new ();
-        static readonly IEnumerable<EntityPlayer> EntityPlayers = GetEntities(DebugMode);
+        private static Settings Settings => Settings.Instance;
 
-        static void Main()
+        private static readonly LocalPlayer LocalPlayer = new ();
+        private static readonly List<EntityPlayer> EntityPlayers = GetEntities(DebugMode);
+
+        private static void Main()
         {
             Memory.Attach();
             
@@ -35,16 +35,17 @@ namespace ApexSharp
             { 
                 try
                 {
+                    if (LocalPlayer.IsLobby) throw new Exception();
+
                     LocalPlayer.BasePointer = 0;
-                    foreach (var entityPlayer in EntityPlayers)
-                        entityPlayer.BasePointer = 0;
+                    EntityPlayers.ForEach(entity => entity.BasePointer = 0);
 
                     if (LocalPlayer.Invalid) continue;
-                    if (LocalPlayer.IsDead) continue;
 
                     if (Settings.SENSE_ENABLED)
                         sense.Update(LocalPlayer, EntityPlayers);
 
+                    if (LocalPlayer.IsDead) continue;
                     if (LocalPlayer.IsKnocked) continue;
                  
                     if (Settings.AIMBOT_ENABLED)
@@ -60,8 +61,8 @@ namespace ApexSharp
                 }
                 catch
                 {
-                    Console.WriteLine("메모리 접근에 문제가 발생했습니다. 5초간 대기합니다.");
-                    Thread.Sleep(5000);
+                    Console.WriteLine("메모리 접근에 문제가 발생했습니다. 10초간 대기합니다.");
+                    Thread.Sleep(10000);
                     Console.WriteLine("다시 루프를 실행합니다.");
                 }
             }
