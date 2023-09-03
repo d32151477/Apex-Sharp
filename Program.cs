@@ -35,7 +35,7 @@ namespace ApexSharp
             { 
                 try
                 {
-                    if (LocalPlayer.IsLobby) throw new Exception();
+                    if (LocalPlayer.CantPlay) throw new Exception();
 
                     LocalPlayer.BasePointer = 0;
                     EntityPlayers.ForEach(entity => entity.BasePointer = 0);
