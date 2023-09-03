@@ -40,11 +40,11 @@ namespace ApexSharp
                         entityPlayer.BasePointer = 0;
 
                     if (LocalPlayer.Invalid) continue;
-                    
+                    if (LocalPlayer.IsDead) continue;
+
                     if (Settings.SENSE_ENABLED)
                         sense.Update(LocalPlayer, EntityPlayers);
 
-                    if (LocalPlayer.IsDead) continue;
                     if (LocalPlayer.IsKnocked) continue;
                  
                     if (Settings.AIMBOT_ENABLED)
