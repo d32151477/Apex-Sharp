@@ -25,12 +25,5 @@ namespace ApexSharp
             get => Memory.Read<Vector3>(BasePointer + Offset.VIEW_ANGLES);
             set => Memory.Write(BasePointer + Offset.VIEW_ANGLES, value);
         }
-        public static bool IsPlaying(int TeamNum)
-        {
-            var teamNum = TeamNum;
-            if (teamNum < 0 || teamNum > 50)
-                return false;
-            return true;
-        }
     }
 }
