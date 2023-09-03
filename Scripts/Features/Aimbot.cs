@@ -19,7 +19,7 @@ namespace ApexSharp
             {
                 if (entityPlayer.Invalid) continue;
                 if (entityPlayer.IsKnocked) continue;
-                if (entityPlayer.Invisible) continue;
+                if (entityPlayer.Visible is not true) continue;
                 if (entityPlayer.TeamNum == playerTeamNum) continue;
 
                 float fov = GetFov(playerCameraOrigin, playerViewAngles, entityPlayer.LocalOrigin);
