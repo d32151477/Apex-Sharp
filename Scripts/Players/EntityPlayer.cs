@@ -41,7 +41,6 @@ namespace ApexSharp
             set => Memory.Write(BasePointer + Offset.GLOW_COLOR, value);
         }
 
-        public bool Invisible => !Visible;
         public bool Visible
         {
             get
