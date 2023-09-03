@@ -6,8 +6,9 @@ namespace ApexSharp
     internal abstract class Entity
     {
         public abstract long BasePointer { get; set; }
-        public bool Invalid => BasePointer == 0;
+        public bool Invalid => BasePointer is 0;
         
+        public long NamePtr => Memory.Read<long>(BasePointer + Offset.NAME);
         public Vector3 LocalOrigin => Memory.Read<Vector3>(BasePointer + Offset.LOCAL_ORIGIN);
         public Vector3 VecAbsVelocity => Memory.Read<Vector3>(BasePointer + Offset.VEC_ABS_VELOCITY);
         public int TeamNum => Memory.Read<int>(BasePointer + Offset.TEAM_NUM);
@@ -16,6 +17,7 @@ namespace ApexSharp
         public bool IsKnocked => Memory.Read<short>(BasePointer + Offset.BLEEDOUT_STATE) > 0;
         public Vector3 CameraOrigin => Memory.Read<Vector3>(BasePointer + Offset.CAMERA_ORIGIN);
 
+        public bool IsPlayer => NamePtr is 125780153691248;
         public bool IsDummy 
         {
             get 
