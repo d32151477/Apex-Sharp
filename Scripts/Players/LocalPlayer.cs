@@ -30,15 +30,13 @@ namespace ApexSharp
         {
             get
             {
-                const string kLobbyName = "mp_lobby";
-                var levelName = Memory.ReadString(Offset.REGION + Offset.LEVEL_NAME, kLobbyName.Length);
+                const string kIngamePrefixName = "mp_rr_";
+                var levelName = Memory.ReadString(Offset.REGION + Offset.LEVEL_NAME, kIngamePrefixName.Length);
 
-                if (string.IsNullOrEmpty(levelName))
-                    return true;
+                if (levelName.StartsWith(kIngamePrefixName))
+                    return false;
                     
-                if (levelName == kLobbyName)
-                    return true;
-                return false;
+                return true;
             }
         }
     }
