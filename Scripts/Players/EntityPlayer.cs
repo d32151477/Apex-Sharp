@@ -5,16 +5,13 @@ namespace ApexSharp
 {
     internal sealed class EntityPlayer : Entity
     {
-        public int Index;
-
-        private long m_BasePointer;
-        private float m_LastVisibleTime;
-        
+        private long m_BasePointer = 0;
         public EntityPlayer(int index) => Index = index;
 
-        public override long BasePointer
+        public int Index { get; set; }
+        public override long BasePointer 
         {
-            get 
+            get
             {
                 if (m_BasePointer == 0)
                     m_BasePointer = Memory.Read<long>(Offset.REGION + Offset.CL_ENTITYLIST + (Index << 5));
@@ -23,8 +20,6 @@ namespace ApexSharp
             set => m_BasePointer = value;
         }
 
-        public float LastVisibleTime => Memory.Read<float>(BasePointer + Offset.LAST_VISIBLE_TIME);
-        
         public int Glow
         {
             get => Memory.Read<int>(BasePointer + Offset.GLOW_ENABLE);
@@ -35,49 +30,31 @@ namespace ApexSharp
             get => Memory.Read<int>(BasePointer + Offset.GLOW_THROUGH_WALL);
             set => Memory.Write(BasePointer + Offset.GLOW_THROUGH_WALL, value);
         }
-        public Vector3 GlowColor
-        {
-            get => Memory.Read<Vector3>(BasePointer + Offset.GLOW_COLOR);
-            set => Memory.Write(BasePointer + Offset.GLOW_COLOR, value);
-        }
 
-        public bool Visible
-        {
-            get
-            {
-                var lastVisibleTime = LastVisibleTime;
-                if (lastVisibleTime > m_LastVisibleTime)
-                {
-                    m_LastVisibleTime = lastVisibleTime;
-                    return true;
-                }
-                m_LastVisibleTime = lastVisibleTime;
-                return false;
-            }
-        }
-
-        public Vector3 GetBonePositionByHitbox(int index)
-        {
-            var localOrigin = LocalOrigin;
-            
-            long model = Memory.Read<long>(BasePointer + Offset.STUDIO_HDR);
-            long studioHDR = Memory.Read<long>(model + 0x8);
-
-            long hitboxCache = Memory.Read<long>(studioHDR + 0x34);
-            long hitboxsArray = studioHDR + ((hitboxCache & 0xFFFE) << (int)(4 * (hitboxCache & 1)));
-            
-            long indexCache = Memory.Read<long>(hitboxsArray + 0x4);
-	        int hitboxIndex = ((int)indexCache & 0xFFFE) << (4 * ((int)indexCache & 1));
-
-	        var bone = Memory.Read<byte>(hitboxsArray + hitboxIndex + (index * 0x20));
-            if(bone < 0 || bone > 255)
-                throw new Exception($"해당 히트박스 ID({index})를 찾을 수 없습니다.");
-
-            var bone_array = Memory.Read<long>(BasePointer + Offset.BONES);
-            var matrix = Memory.Read<Matrix3x4>(bone_array + bone * Matrix3x4.Size);
+        public float LastVisibleTime => Memory.Read<float>(BasePointer + Offset.LAST_VISIBLE_TIME);
         
-            var BoneOrigin = new Vector3(matrix.M03, matrix.M13, matrix.M23); 
-            return localOrigin + BoneOrigin;
+        public bool IsVisible(float timeBase)
+        {
+            // 벽 뒤로 사라졌을 경우에 0.25초 만큼 지속합니다.
+            var lastVisibleTime = LastVisibleTime;
+            if (lastVisibleTime < 0.0f)
+                return false;
+                
+            const float Duration = 0.25f; 
+            if (lastVisibleTime + Duration > timeBase)
+                return true;
+            return false;
+        }
+        public Vector3 GetBonePositionByIndex(int boneId)
+        {
+            var boneArr = Memory.Read<long>(BasePointer + Offset.BONES);
+            
+            var x = Memory.Read<float>(boneArr + 0xCC + (boneId * 0x30));
+            var y = Memory.Read<float>(boneArr + 0xDC + (boneId * 0x30));
+            var z = Memory.Read<float>(boneArr + 0xEC + (boneId * 0x30));
+
+            var boneOrigin = new Vector3(x, y, z);
+            return LocalOrigin + boneOrigin;
         }
     }
     

@@ -4,50 +4,57 @@ namespace ApexSharp
 {
     internal class Aimbot
     {
+        public EntityPlayer Target { get; set; }
         private static Settings Settings => Settings.Instance;
 
         public void Update(LocalPlayer player, IEnumerable<EntityPlayer> entityPlayers)
         {
-            var Target = default(EntityPlayer);
-            var minimumFov = float.MaxValue;
+            var target = Target = default;
+            var targetFov = float.MaxValue;
 
-            var playerCameraOrigin = player.CameraOrigin;
-            var playerViewAngles = player.ViewAngles;
-            var playerTeamNum = player.TeamNum;
-            
+            var cameraOrigin = player.CameraOrigin;
+            var viewAngles = player.ViewAngles;
+            var teamNum = player.TeamNum;
+            var timeBase = player.TimeBase;
+
             foreach (var entityPlayer in entityPlayers)
             {
                 if (entityPlayer.Invalid) continue;
                 if (entityPlayer.IsKnocked) continue;
-                if (entityPlayer.Visible is not true) continue;
-                if (entityPlayer.TeamNum == playerTeamNum) continue;
+                if (entityPlayer.IsVisible(timeBase) == false) continue;
+                if (entityPlayer.TeamNum == teamNum) continue;
 
-                float fov = GetFov(playerCameraOrigin, playerViewAngles, entityPlayer.LocalOrigin);
-                if (fov < minimumFov)
-                {
-                    Target = entityPlayer;
-                    minimumFov = fov;
-                }
+                float fov = GetFov(cameraOrigin, viewAngles, entityPlayer.LocalOrigin);
+                if (fov >= targetFov)
+                    continue;
+
+                target = entityPlayer;
+                targetFov = fov;
             }
-
-            if (Target == default)
+            if (target == default)
                 return;
-                
-            var angles = GetAnglesToTargetBone(player, Target, Settings.AIMBOT_MAX_FOV);
+
+            var distance = Vector3.Distance(player.LocalOrigin, target.LocalOrigin);
+            var meters = distance * 0.02535f;
+            if (meters > Settings.AIMBOT_MAX_DISTANCE)
+                return;
+
+            var angles = GetPredictedViewAngles(player, target, Settings.AIMBOT_MAX_FOV);
             if (angles == Vector3.Zero)
                 return;
 
+            Target = target;
             player.ViewAngles = angles;
         }
-        public Vector3 GetAnglesToTargetBone(LocalPlayer player, EntityPlayer target, float range)
+        public Vector3 GetPredictedViewAngles(LocalPlayer player, EntityPlayer target, float maxFov)
         {
             var cameraOrigin = player.CameraOrigin;
-            var targetOrigin = target.GetBonePositionByHitbox(Settings.AIMBOT_HITBOX_ID);
+            var targetOrigin = target.GetBonePositionByIndex(Settings.AIMBOT_BONE_ID);
             
             var weapon = new Weapon(player);
 
             if (weapon.ZoomFov != 0.0f && weapon.ZoomFov != 1.0f)
-                range *= weapon.ZoomFov / 90.0f;
+                maxFov *= weapon.ZoomFov / 90.0f;
             
             // 탄도 각도를 계산합니다.
             var angles = Vector3.Zero;
@@ -69,13 +76,15 @@ namespace ApexSharp
             angles -= breathAngles - viewAngles;
             angles = NormalizeAngles(angles);
 
-            if (range < GetFov(breathAngles, angles))
+            var fov = GetFov(breathAngles, angles);
+            if (fov > maxFov)
                 return Vector3.Zero;
 
             var delta = angles - viewAngles;
             delta = NormalizeAngles(delta);
 
             var smoothedAngles = viewAngles + delta / Settings.AIMBOT_SMOOTHNESS;
+
             return smoothedAngles;
         }
         private static float GetFov(Vector3 viewOrigin, Vector3 viewAngles, Vector3 targetOrigin)

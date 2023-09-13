@@ -1,25 +1,36 @@
+using System.Diagnostics;
 using System.Numerics;
-using ApexSharp;
 
-internal class Recoil
+namespace ApexSharp
 {
-    private readonly float m_Strength;
-    private Vector3 m_PreviousPunchWeaponAngles = Vector3.Zero;
-    
-    public Recoil(float strength)
+    internal class Recoil
     {
-        m_Strength = strength;
-    }
+        private readonly float m_PitchStrength;
+        private readonly float m_YawStrength;
 
-    public void Update(LocalPlayer player)
-    {
-        var viewAngles = player.ViewAngles;
-        var punchWeaponAngles = player.PunchWeaponAngles;
+        private Vector3 m_PreviousPunchWeaponAngles = Vector3.Zero;
         
-        var angles = viewAngles + (m_PreviousPunchWeaponAngles - punchWeaponAngles) * m_Strength;
-        
-        player.ViewAngles = new Vector3(angles.X, angles.Y, 0.0f);
-        m_PreviousPunchWeaponAngles = punchWeaponAngles;
-    }
+        public Recoil(float pitchStrength, float yawStrength)
+        {
+            m_PitchStrength = pitchStrength;
+            m_YawStrength = yawStrength;
+        }
 
+        public void Update(LocalPlayer player)
+        {
+            if (player.IsSemiAuto)
+                return;
+                
+            var viewAngles = player.ViewAngles;
+            var punchWeaponAngles = player.PunchWeaponAngles;
+            
+            var delta = m_PreviousPunchWeaponAngles - punchWeaponAngles;
+            
+            var pitch = delta.X * m_PitchStrength;
+            var yaw = delta.Y * m_YawStrength;
+            
+            player.ViewAngles = viewAngles + new Vector3(pitch, yaw, 0.0f);
+            m_PreviousPunchWeaponAngles = punchWeaponAngles;
+        }
+    }
 }

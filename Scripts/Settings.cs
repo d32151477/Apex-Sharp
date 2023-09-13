@@ -20,11 +20,13 @@ namespace ApexSharp
         public bool AIMBOT_ENABLED = true;
         public bool ASSIST_ENABLED = true;
 
-        public float RECOIL_STRENGTH = 0.5f;
+        public float RECOIL_PITCH_STRENGTH = 0.5f;
+        public float RECOIL_YAW_STRENGTH = 0.5f;
 
-        public int AIMBOT_HITBOX_ID = 0;
-        public float AIMBOT_MAX_FOV = 8.0f;
-        public float AIMBOT_SMOOTHNESS = 200.0f;
+        public int AIMBOT_BONE_ID = 8;
+        public float AIMBOT_MAX_FOV = 15.0f;
+        public float AIMBOT_MAX_DISTANCE = 30.0f;
+        public float AIMBOT_SMOOTHNESS = 150.0f;
 
         public InputKey ASSIST_AUTO_BHOP_KEY = new (InputType.Keyboard, 56);
         public InputKey ASSIST_AUTO_SUPERGLID_KEY = new (InputType.Mouse, 275);

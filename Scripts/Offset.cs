@@ -44,11 +44,12 @@ namespace ApexSharp
             // [Miscellaneous]
             GLOBALVARS = Get(@"Miscellaneous\GlobalVars");
             LEVEL_NAME = Get(@"Miscellaneous\LevelName");
-            LOCAL_PLAYER = Get(@"Miscellaneous\LocalPlayer") + 0x8;
-            
+            LOCAL_PLAYER = Get(@"Miscellaneous\LocalPlayer");
+            VIEW_RENDER = Get(@"Miscellaneous\ViewRender");
+            VIEW_MATRIX = Get(@"Miscellaneous\ViewMatrix");
+
             CL_ENTITYLIST = Get(@"Miscellaneous\cl_entitylist");
             CAMERA_ORIGIN = Get(@"Miscellaneous\CPlayer!camera_origin");
-            LAST_VISIBLE_TIME = Get(@"Miscellaneous\CPlayer!lastVisibleTime");
             STUDIO_HDR = Get(@"Miscellaneous\CBaseAnimating!m_pStudioHdr");
             
             CURRENT_FRAME = GLOBALVARS + 0x8;
@@ -79,6 +80,8 @@ namespace ApexSharp
             ZOOMING = Get(@"RecvTable.DT_Player\m_bZooming");
 
             // [DataMap.C_Player]
+            LAST_VISIBLE_TIME = 0x19B0;
+            TIME_BASE = Get(@"DataMap.C_Player\m_currentFramePlayer.timeBase");
             VEC_ABS_VELOCITY = Get(@"DataMap.C_Player\m_vecAbsVelocity");
             TRAVERSAL_PROGRESS = Get(@"DataMap.C_Player\m_traversalProgress");
             TRAVERSAL_START_TIME = Get(@"DataMap.C_Player\m_traversalStartTime");
@@ -104,15 +107,15 @@ namespace ApexSharp
             LATEST_PRIMARY_WEAPONS = Get(@"RecvTable.DT_BaseCombatCharacter\m_latestPrimaryWeapons");
 
             // [RecvTable.DT_HighlightSettings]
-            HIGHLIGHT_SERVER_CONTEXT_ID = Get(@"RecvTable.DT_HighlightSettings\m_highlightServerContextID");
-            HIGHLIGHT_FUNCTION_BITS = Get(@"RecvTable.DT_HighlightSettings\m_highlightFunctionBits");
-            HIGHLIGHT_PARAMS = Get(@"RecvTable.DT_HighlightSettings\m_highlightParams");
+            HIGHLIGHT_SERVER_PARAM_CONTEXT_ID = Get(@"RecvTable.DT_HighlightSettings\m_highlightServerParamContextId");
+            HIGHLIGHT_SERVER_PARAMS = Get(@"RecvTable.DT_HighlightSettings\m_highlightServerParams");
 
-            GLOW_ENABLE = HIGHLIGHT_SERVER_CONTEXT_ID + 0x8;
-            GLOW_THROUGH_WALL = HIGHLIGHT_SERVER_CONTEXT_ID + 0x10;
-            GLOW_COLOR = HIGHLIGHT_PARAMS + 0x18;
-            GLOW_MODE = HIGHLIGHT_FUNCTION_BITS + 0x4;
-
+            HIGHLIGHT_SERVER_ACTIVE_STATES = Get(@"RecvTable.DT_HighlightSettings\m_highlightServerActiveStates");
+            HIGHLIGHT_CURRENT_CONTEXT_ID = HIGHLIGHT_SERVER_ACTIVE_STATES - 0x4;
+            
+            GLOW_ENABLE = HIGHLIGHT_SERVER_PARAM_CONTEXT_ID - 0x30;
+            GLOW_THROUGH_WALL = HIGHLIGHT_SERVER_PARAM_CONTEXT_ID - 0x4c;
+            
             // (https://www.unknowncheats.me/forum/apex-legends/319804-apex-legends-reversal-structs-offsets-628.html)
             
             // [WeaponSettingsMeta]
@@ -132,14 +135,18 @@ namespace ApexSharp
             throw new Exception($"해당 키({key})의 오프셋을 찾을 수 없습니다.");
         }
 
-        
-        public const long REGION = 0x140000000; // cat /proc/PID/maps 로 모듈 베이스 주소를 구하세요.
+        // pidof r5apex.exe
+        // cat /proc/(PID)/maps 로 모듈 베이스 주소를 구하세요.
+
+        public const long REGION = 0x140000000; 
+        public static long TIME_BASE;
         public static long GLOBALVARS; // [Miscellaneous]
         public static long LEVEL_NAME;
         public static long LOCAL_PLAYER;
+        public static long VIEW_RENDER;
+        public static long VIEW_MATRIX;
         public static long CL_ENTITYLIST;
         public static long CAMERA_ORIGIN;
-        public static long LAST_VISIBLE_TIME;
         public static long STUDIO_HDR;
         public static long CURRENT_FRAME;
         public static long IN_ATTACK; // [Buttons]
@@ -164,22 +171,25 @@ namespace ApexSharp
         public static long VEC_PUNCH_WEAPON_ANGLE;
         public static long VIEW_ANGLES;
         public static long BREATH_ANGLES;
+        public static long LAST_VISIBLE_TIME;
         public static long PLAYER_DATA; // [DataMap.CWeaponX]
         public static long ZOOM_FOV; 
         public static long FORCE_BONE; // [RecvTable.DT_BaseAnimating]
         public static long BONES;
         public static long CUR_ZOOM_FOV; // [RecvTable.DT_WeaponPlayerData]
         public static long LATEST_PRIMARY_WEAPONS; // [RecvTable.DT_BaseCombatCharacter]
-        public static long HIGHLIGHT_SERVER_CONTEXT_ID;
-        public static long HIGHLIGHT_FUNCTION_BITS;
-        public static long HIGHLIGHT_PARAMS;
+        public static long HIGHLIGHT_SERVER_PARAM_CONTEXT_ID;
+        public static long HIGHLIGHT_SERVER_PARAMS;
         public static long GLOW_ENABLE;
         public static long GLOW_THROUGH_WALL;
-        public static long GLOW_COLOR;
-        public static long GLOW_MODE;
         public static long WEAPON_SETTINGS_META_BASE; // [WeaponSettingsMeta]
         public static long PROJECTILE_LAUNCH_SPEED; // [WeaponSettings]
         public static long PROJECTILE_GRAVITY_SCALE;
         public static long IS_SEMI_AUTO;
+        public static long HIGHLIGHT_SETTINGS = 0xB5F7620;
+        public static long HIGHLIGHT_GLOW_FIX = 0x270;
+        public static long HIGHLIGHT_SERVER_ACTIVE_STATES; //RecvTable.DT_HighlightSettings.m_highlightServerActiveStates
+        public static long HIGHLIGHT_CURRENT_CONTEXT_ID; //RecvTable.DT_HighlightSettings.m_highlightCurrentContextId
     }
+   
 }

@@ -1,15 +1,14 @@
 
-using System.Diagnostics;
 
 namespace ApexSharp
 {
     internal class Program
     {
-        public static bool DebugMode = false;
+        public static bool Debug = false;
         private static Settings Settings => Settings.Instance;
 
         private static readonly LocalPlayer LocalPlayer = new ();
-        private static readonly List<EntityPlayer> EntityPlayers = GetEntities(DebugMode);
+        private static readonly List<EntityPlayer> EntityPlayers = GetEntities(Debug);
 
         private static void Main()
         {
@@ -23,7 +22,7 @@ namespace ApexSharp
 
             var sense = new Sense();
             var aimbot = new Aimbot();
-            var recoil = new Recoil(Settings.RECOIL_STRENGTH);
+            var recoil = new Recoil(Settings.RECOIL_PITCH_STRENGTH, Settings.RECOIL_YAW_STRENGTH);
             var assist = new Assist();
             
             Console.WriteLine(Settings);
@@ -35,15 +34,16 @@ namespace ApexSharp
             { 
                 try
                 {
-                    if (LocalPlayer.CantPlay) throw new Exception();
-
+                    if (Region.Invalid) 
+                        throw new Exception();
+                        
                     LocalPlayer.BasePointer = 0;
                     EntityPlayers.ForEach(entity => entity.BasePointer = 0);
 
                     if (LocalPlayer.Invalid) continue;
 
                     if (Settings.SENSE_ENABLED)
-                        sense.Update(LocalPlayer, EntityPlayers);
+                        sense.Update(LocalPlayer, EntityPlayers, aimbot.Target);
 
                     if (LocalPlayer.IsDead) continue;
                     if (LocalPlayer.IsKnocked) continue;
@@ -56,11 +56,13 @@ namespace ApexSharp
                     
                     if (Settings.ASSIST_ENABLED)
                         assist.Update(LocalPlayer);
-
+                    
                     Thread.Sleep(5);
                 }
-                catch
+                catch (Exception e)
                 {
+                    if (Debug)
+                        Console.WriteLine(e);
                     Console.WriteLine("메모리 접근에 문제가 발생했습니다. 10초간 대기합니다.");
                     Thread.Sleep(10000);
                     Console.WriteLine("다시 루프를 실행합니다.");
@@ -68,12 +70,12 @@ namespace ApexSharp
             }
         }
 
-        private static List<EntityPlayer> GetEntities(bool debugMode)
+        private static List<EntityPlayer> GetEntities(bool debug)
         {
-            var enumerable = Enumerable.Range(1, debugMode ? 0xFFFF : 60);
+            var enumerable = Enumerable.Range(1, debug ? 0xFFFF : 60);
             var entities = from index in enumerable select new EntityPlayer(index);
-            if (DebugMode)
-                return new (from entity in entities where entity.Invalid is not true && entity.IsDummy select entity);
+            if (debug)
+                return new (from entity in entities where entity.Invalid == false && entity.IsDummy select entity);
             return new (entities);
         }
     }
