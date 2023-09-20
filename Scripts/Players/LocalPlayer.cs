@@ -19,25 +19,42 @@ namespace ApexSharp
         public Vector3 BreathAngles => Memory.Read<Vector3>(BasePointer + Offset.BREATH_ANGLES);
         public float TraversalStartTime => Memory.Read<float>(BasePointer + Offset.TRAVERSAL_START_TIME);
         public float TraversalProgress => Memory.Read<float>(BasePointer + Offset.TRAVERSAL_PROGRESS);
-
+        
         public Vector3 ViewAngles
         {
             get => Memory.Read<Vector3>(BasePointer + Offset.VIEW_ANGLES);
             set => Memory.Write(BasePointer + Offset.VIEW_ANGLES, value);
         }
-
+        public bool Attacking 
+        {
+            get 
+            {
+                var button = Memory.Read<SDK.k_button_t>(Offset.REGION + Offset.IN_ATTACK);
+                if (button.state == 5)
+                    return true;
+                return false;
+            }
+        } 
         public static bool CantPlay
         {
             get
             {
                 const string kIngamePrefixName = "mp_rr_";
                 var levelName = Memory.ReadString(Offset.REGION + Offset.LEVEL_NAME, kIngamePrefixName.Length);
-
                 if (levelName.StartsWith(kIngamePrefixName))
                     return false;
                     
                 return true;
             }
+        }
+    }
+
+    namespace SDK
+    {
+        public struct k_button_t
+        {
+            public int[] down;
+            public int state;
         }
     }
 }
