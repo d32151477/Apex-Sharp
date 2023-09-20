@@ -106,10 +106,10 @@ namespace ApexSharp
             HIGHLIGHT_SERVER_PARAM_CONTEXT_ID = Get(@"RecvTable.DT_HighlightSettings\m_highlightServerParamContextId");
             HIGHLIGHT_SERVER_PARAMS = Get(@"RecvTable.DT_HighlightSettings\m_highlightServerParams");
 
-            GLOW_ENABLE = HIGHLIGHT_SERVER_PARAM_CONTEXT_ID + 0x8;
-            GLOW_THROUGH_WALL = HIGHLIGHT_SERVER_PARAM_CONTEXT_ID + 0x10;
+            GLOW_ENABLE = HIGHLIGHT_SERVER_PARAM_CONTEXT_ID - 0x30;
+            GLOW_THROUGH_WALL = HIGHLIGHT_SERVER_PARAM_CONTEXT_ID - 0x4c;
             GLOW_COLOR = HIGHLIGHT_SERVER_PARAMS + 0x18;
-
+            
             // (https://www.unknowncheats.me/forum/apex-legends/319804-apex-legends-reversal-structs-offsets-628.html)
             
             // [WeaponSettingsMeta]
@@ -132,6 +132,7 @@ namespace ApexSharp
 
         // pidof r5apex.exe
         // cat /proc/(PID)/maps 로 모듈 베이스 주소를 구하세요.
+
         public const long REGION = 0x140000000; 
         public static long GLOBALVARS; // [Miscellaneous]
         public static long LEVEL_NAME;
