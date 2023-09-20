@@ -44,11 +44,10 @@ namespace ApexSharp
             // [Miscellaneous]
             GLOBALVARS = Get(@"Miscellaneous\GlobalVars");
             LEVEL_NAME = Get(@"Miscellaneous\LevelName");
-            LOCAL_PLAYER = Get(@"Miscellaneous\LocalPlayer") + 0x8;
+            LOCAL_PLAYER = Get(@"Miscellaneous\LocalPlayer");
             
             CL_ENTITYLIST = Get(@"Miscellaneous\cl_entitylist");
             CAMERA_ORIGIN = Get(@"Miscellaneous\CPlayer!camera_origin");
-            LAST_VISIBLE_TIME = Get(@"Miscellaneous\CPlayer!lastVisibleTime");
             STUDIO_HDR = Get(@"Miscellaneous\CBaseAnimating!m_pStudioHdr");
             
             CURRENT_FRAME = GLOBALVARS + 0x8;
@@ -104,19 +103,18 @@ namespace ApexSharp
             LATEST_PRIMARY_WEAPONS = Get(@"RecvTable.DT_BaseCombatCharacter\m_latestPrimaryWeapons");
 
             // [RecvTable.DT_HighlightSettings]
-            HIGHLIGHT_SERVER_CONTEXT_ID = Get(@"RecvTable.DT_HighlightSettings\m_highlightServerContextID");
-            HIGHLIGHT_FUNCTION_BITS = Get(@"RecvTable.DT_HighlightSettings\m_highlightFunctionBits");
-            HIGHLIGHT_PARAMS = Get(@"RecvTable.DT_HighlightSettings\m_highlightParams");
+            HIGHLIGHT_SERVER_PARAM_CONTEXT_ID = Get(@"RecvTable.DT_HighlightSettings\m_highlightServerParamContextId");
+            HIGHLIGHT_SERVER_PARAMS = Get(@"RecvTable.DT_HighlightSettings\m_highlightServerParams");
 
-            GLOW_ENABLE = HIGHLIGHT_SERVER_CONTEXT_ID + 0x8;
-            GLOW_THROUGH_WALL = HIGHLIGHT_SERVER_CONTEXT_ID + 0x10;
-            GLOW_COLOR = HIGHLIGHT_PARAMS + 0x18;
-            GLOW_MODE = HIGHLIGHT_FUNCTION_BITS + 0x4;
+            GLOW_ENABLE = HIGHLIGHT_SERVER_PARAM_CONTEXT_ID + 0x8;
+            GLOW_THROUGH_WALL = HIGHLIGHT_SERVER_PARAM_CONTEXT_ID + 0x10;
+            GLOW_COLOR = HIGHLIGHT_SERVER_PARAMS + 0x18;
 
             // (https://www.unknowncheats.me/forum/apex-legends/319804-apex-legends-reversal-structs-offsets-628.html)
             
             // [WeaponSettingsMeta]
             WEAPON_SETTINGS_META_BASE = Get(@"WeaponSettingsMeta\base");
+            LAST_VISIBLE_TIME = WEAPON_SETTINGS_META_BASE - 0x18;
 
             // [WeaponSettings]
             PROJECTILE_LAUNCH_SPEED = WEAPON_SETTINGS_META_BASE + Get(@"WeaponSettings\projectile_launch_speed");
@@ -132,8 +130,9 @@ namespace ApexSharp
             throw new Exception($"해당 키({key})의 오프셋을 찾을 수 없습니다.");
         }
 
-        
-        public const long REGION = 0x140000000; // cat /proc/PID/maps 로 모듈 베이스 주소를 구하세요.
+        // pidof r5apex.exe
+        // cat /proc/(PID)/maps 로 모듈 베이스 주소를 구하세요.
+        public const long REGION = 0x140000000; 
         public static long GLOBALVARS; // [Miscellaneous]
         public static long LEVEL_NAME;
         public static long LOCAL_PLAYER;
@@ -170,9 +169,8 @@ namespace ApexSharp
         public static long BONES;
         public static long CUR_ZOOM_FOV; // [RecvTable.DT_WeaponPlayerData]
         public static long LATEST_PRIMARY_WEAPONS; // [RecvTable.DT_BaseCombatCharacter]
-        public static long HIGHLIGHT_SERVER_CONTEXT_ID;
-        public static long HIGHLIGHT_FUNCTION_BITS;
-        public static long HIGHLIGHT_PARAMS;
+        public static long HIGHLIGHT_SERVER_PARAM_CONTEXT_ID;
+        public static long HIGHLIGHT_SERVER_PARAMS;
         public static long GLOW_ENABLE;
         public static long GLOW_THROUGH_WALL;
         public static long GLOW_COLOR;
