@@ -1,10 +1,10 @@
 # Apex-Sharp-Linux
 Linux용 Apex Legends 외부 치트입니다.
 
-## Sense
+## Sense (ESP)
 적 플레이어의 위치를 보여주는 기능입니다.
 
-## Recoil
+## Recoil (RCS)
 반동을 감소시키는 기능입니다.
 
 - ```RECOIL_YAW_STRENGTH``` 수직 반동을 해당 수치만큼 감소시킵니다.
