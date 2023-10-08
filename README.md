@@ -15,11 +15,12 @@ Linux용 Apex Legends 외부 치트입니다.
 #### 성능을 최소화하여 사용해주세요.
 탄도 궤적과 해당 타겟 플레이어의 이동 방향과 속도를 계산하여 에임을 이동시킵니다.
 
-- ```AIMBOT_MAX_FOV``` 해당 FOV 값 안에 타겟이 존재한다면 에임을 이동시킵니다.
-- ```AIMBOT_SMOOTHNESS``` 타겟으로 에임을 이동시키는 속도입니다.
-- ```AIMBOT_HITBOX_ID``` 타겟의 [히트박스 ID]입니다. 
+- ```AIMBOT_MAX_FOV``` 해당 FOV 값 안에 타겟이 존재한다면 에임봇을 활성화합니다.
+- ```AIMBOT_MAX_DISTANCE``` 해당 거리 안에 타겟이 존재한다면 에임봇을 활성화합니다.
+- ```AIMBOT_SMOOTHNESS``` 에임이 타겟으로 이동하는 속도입니다.
+- ```AIMBOT_BONE_ID``` 타겟의 [BONE ID]입니다. 
 
-[히트박스 ID]: https://www.unknowncheats.me/wiki/Apex_Legends_Bones_and_Hitboxes
+[BONE ID]: https://www.unknowncheats.me/wiki/Apex_Legends_Bones_and_Hitboxes
 
 ## Assist
 오토 슈퍼글라이드 / 오토 버니합 기능입니다.
