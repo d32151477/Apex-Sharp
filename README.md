@@ -34,17 +34,6 @@ Linux용 Apex Legends 외부 치트입니다.
 - ```INPUT_MOUSE_DEVICE_PATH``` 마우스 입력 장치 주소
 - ```INPUT_KEYBOARD_DEVICE_PATH``` 키보드 입력 장치 주소
 
-## 주의사항
-
-#### 보이지 않는 상대를 쏘지 마세요.
-- 연막의 보이지 않는 곳을 쏘는 행위는 서버 통계를 통해 계정 정지 됩니다.
-
-####  5000 데미지 이상의 피해를 주지 마세요.
-- 한 게임에서 일반적이지 않은 높은 데미지를 달성할 시 서버 통계를 통해 계정 정지 됩니다.
-
-#### 에임봇의 수치를 낮춰서 사용해주세요.
-- 특정 뼈에 대한 명중률이 비약적으로 상승하면 서버 통계를 통해 계정 정지 됩니다.  
-
 ## 사용법
 - 루트 프로세스 격리를 사용하려면 Flatpak을 통해 Steam을 설치해야합니다.
 
@@ -144,3 +133,14 @@ git clone https://github.com/d32151477/Apex-Sharp
 [Apexdream]: https://github.com/CasualX/apexdream/tree/master/offsets
 [ApexDumper]: https://casualhacks.net/apexdream/apexdumper.html
 [Scylla]: https://github.com/scylladb/scylladb
+
+## 주의사항
+
+#### 보이지 않는 상대를 쏘지 마세요.
+- 연막의 보이지 않는 곳을 쏘는 행위는 서버 통계를 통해 계정 정지 됩니다.
+
+####  5000 데미지 이상의 피해를 주지 마세요.
+- 한 게임에서 일반적이지 않은 높은 데미지를 달성할 시 서버 통계를 통해 계정 정지 됩니다.
+
+#### 에임봇의 수치를 낮춰서 사용해주세요.
+- 특정 뼈에 대한 명중률이 비약적으로 상승하면 서버 통계를 통해 계정 정지 됩니다.  
