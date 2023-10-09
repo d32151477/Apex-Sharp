@@ -1,23 +1,24 @@
 # Apex-Sharp-Linux
 Linux용 Apex Legends 외부 치트입니다.
 
-## Sense
+## Sense (ESP)
 적 플레이어의 위치를 보여주는 기능입니다.
 
-## Recoil
+## Recoil (RCS)
 반동을 감소시키는 기능입니다.
 
-- ```RECOIL_STRENGTH``` 반동을 해당 수치만큼 감소시킵니다.
+- ```RECOIL_YAW_STRENGTH``` 수직 반동을 해당 수치만큼 감소시킵니다.
+- ```RECOIL_PITCH_STRENGTH``` 수평 반동을 해당 수치만큼 감소시킵니다.
 
 ## Aimbot
-#### 인간적이지 않은 세팅값은 통계와 모니터링을 통해 EAC 밴 될 수 있습니다.
 탄도 궤적과 해당 타겟 플레이어의 이동 방향과 속도를 계산하여 에임을 이동시킵니다.
 
-- ```AIMBOT_MAX_FOV``` 해당 FOV 값 안에 타겟이 존재한다면 에임을 이동시킵니다.
-- ```AIMBOT_SMOOTHNESS``` 타겟으로 에임을 이동시키는 속도입니다.
-- ```AIMBOT_HITBOX_ID``` 타겟의 [히트박스 ID]입니다. 
+- ```AIMBOT_MAX_FOV``` 해당 FOV 값 안에 타겟이 존재한다면 에임봇을 활성화합니다.
+- ```AIMBOT_MAX_DISTANCE``` 해당 거리 안에 타겟이 존재한다면 에임봇을 활성화합니다.
+- ```AIMBOT_SMOOTHNESS``` 에임이 타겟으로 이동하는 속도입니다.
+- ```AIMBOT_BONE_ID``` 타겟의 [BONE ID]입니다. 
 
-[히트박스 ID]: https://www.unknowncheats.me/wiki/Apex_Legends_Bones_and_Hitboxes
+[BONE ID]: https://www.unknowncheats.me/wiki/Apex_Legends_Bones_and_Hitboxes
 
 ## Assist
 오토 슈퍼글라이드 / 오토 버니합 기능입니다.
@@ -33,8 +34,19 @@ Linux용 Apex Legends 외부 치트입니다.
 - ```INPUT_MOUSE_DEVICE_PATH``` 마우스 입력 장치 주소
 - ```INPUT_KEYBOARD_DEVICE_PATH``` 키보드 입력 장치 주소
 
-## Flatpak / Steam 설치
-루트 프로세스 격리를 사용하려면 Flatpak을 통해 Steam을 설치해야합니다.
+## 주의사항
+
+#### 보이지 않는 상대를 쏘지 마세요
+- 시야에 보이지 않는 상대에 지속적으로 피해를 가하면 서버 통계를 통해 계정 정지 됩니다.
+
+####  5000 데미지 이상의 피해를 주지 마세요
+- 한 게임에서 일반적이지 않은 높은 데미지를 달성할 시 서버 통계를 통해 계정 정지 됩니다.
+
+#### 에임봇의 수치를 낮춰서 사용해주세요
+- 특정 뼈에 대한 명중률이 비약적으로 상승하면 서버 통계를 통해 계정 정지 됩니다.  
+
+## 사용법
+- 루트 프로세스 격리를 사용하려면 Flatpak을 통해 Steam을 설치해야합니다.
 
 1. Flatpak 설치
    
